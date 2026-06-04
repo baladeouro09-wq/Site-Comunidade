@@ -30,6 +30,8 @@ main{padding-top:90px}
 /* HERO */
 .hero{min-height:calc(100vh - 90px);display:flex;align-items:center}
 .hero-grid{display:grid;grid-template-columns:1fr 420px;gap:40px;align-items:center}
+.hero-logo-card{margin-bottom:22px;border-radius:24px;overflow:hidden;border:1px solid rgba(255,255,255,.06);box-shadow:0 18px 60px rgba(0,0,0,.35);}
+.hero-logo-card img{width:100%;display:block;max-height:320px;object-fit:cover}
 .badge{display:inline-block;background:#1A1A2E;color:var(--accent);padding:6px 12px;border-radius:999px;font-weight:700;margin-bottom:18px}
 h1{font-size:48px;line-height:1.02;margin:0 0 12px}
 .p.lead{color:var(--muted);margin:0 0 20px}
