@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dybala Optimizer</title>
+  <style>
+    :root{
+      --bg:#0F0F0F;
+      --card:#161616;
+      --border:#222222;
+      --accent:#6C63FF;
+      --accent-2:#4CAF50;
+      --text:#FFFFFF;
+      --muted:#555555;
+      --btn-secondary-bg:#1A1A1A;
+      --btn-secondary-text:#888888;
+      --btn-secondary-border:#333333;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;background:var(--bg);color:var(--text);font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;scroll-behavior:smooth}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1200px;margin:0 auto;padding:0 20px}
+
+    /* NAVBAR */
+    header{position:fixed;left:0;right:0;top:0;z-index:50;background:rgba(10,10,10,0.6);backdrop-filter:blur(8px);border-bottom:1px solid rgba(34,34,34,0.6)}
+    .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:700}
+    .logo{width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#5a52f7);display:inline-grid;place-items:center;color:white;font-weight:800}
+    nav ul{display:flex;gap:20px;list-style:none;padding:0;margin:0}
+    .nav-right{display:flex;gap:12px;align-items:center}
+    .btn{padding:10px 16px;border-radius:8px;border:0;cursor:pointer;font-weight:600}
+    .btn-primary{background:var(--accent);color:#fff}
+    .btn-secondary{background:var(--btn-secondary-bg);color:var(--btn-secondary-text);border:1px solid var(--btn-secondary-border)}
+
+    main{padding-top:90px}
+
+    /* HERO */
+    .hero{min-height:calc(100vh - 90px);display:flex;align-items:center}
+    .hero-grid{display:grid;grid-template-columns:1fr 420px;gap:40px;align-items:center}
+    .badge{display:inline-block;background:#1A1A2E;color:var(--accent);padding:6px 12px;border-radius:999px;font-weight:700;margin-bottom:18px}
+    h1{font-size:48px;line-height:1.02;margin:0 0 12px}
+    p.lead{color:var(--muted);margin:0 0 20px}
+    .hero-cta{display:flex;gap:12px;margin-top:12px}
+    .mockup{width:100%;height:320px;background:linear-gradient(180deg,#0b0b0b,#141414);border-radius:16px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:#888;font-size:14px}
+
+    /* STATS */
+    .stats{background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:18px 0;margin-top:30px}
+    .stats-grid{display:flex;gap:12px;justify-content:space-between;max-width:1000px;margin:0 auto}
+    .stat{flex:1;text-align:center}
+    .stat b{display:block;font-size:20px}
+    .stat small{color:var(--muted)}
+
+    /* FEATURES */
+    .features{padding:48px 0}
+    .features h2{text-align:center;margin-bottom:18px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:var(--card);padding:18px;border:1px solid var(--border);border-radius:12px;min-height:120px;display:flex;gap:12px;align-items:flex-start}
+    .icon{width:44px;height:44px;border-radius:10px;display:inline-grid;place-items:center;font-size:20px}
+    .icon--purple{background:linear-gradient(135deg,#7a73ff,#5b4ef0);}
+    .icon--green{background:linear-gradient(135deg,#4caf50,#3fa045);}
+    .icon--orange{background:linear-gradient(135deg,#ff8a4b,#ff6e2d);}
+    .icon--blue{background:linear-gradient(135deg,#4fb3ff,#2b8cff);}
+    .icon--yellow{background:linear-gradient(135deg,#ffd75a,#ffc107);}
+    .icon--red{background:linear-gradient(135deg,#ff6b6b,#ff3b3b);}
+    .card h3{margin:0 0 6px}
+    .card p{margin:0;color:var(--muted);font-size:14px}
+
+    /* HOW IT WORKS */
+    .steps{padding:36px 0}
+    .step-row{display:flex;gap:24px;align-items:center;justify-content:center}
+    .step{display:flex;flex-direction:column;align-items:center;gap:12px}
+    .step .circle{width:64px;height:64px;border-radius:999px;background:var(--accent);display:grid;place-items:center;font-weight:800}
+    .connector{height:4px;background:linear-gradient(90deg,var(--accent),#2dd26f);flex:1;border-radius:4px}
+
+    /* PRICING */
+    .pricing{padding:48px 0;display:flex;justify-content:center}
+    .price-card{width:420px;background:linear-gradient(180deg,#0f0f10,#0b0b0b);border:1px solid var(--border);padding:20px;border-radius:12px;position:relative}
+    .price-card.highlight{border:2px solid var(--accent)}
+    .price-badge{position:absolute;left:20px;top:-14px;background:var(--accent);color:#fff;padding:6px 12px;border-radius:8px;font-weight:700}
+    .price{font-size:48px;font-weight:800;margin:10px 0}
+    .features-list{list-style:none;padding:0;margin:12px 0 18px}
+    .features-list li{margin:8px 0;color:var(--muted)}
+
+    /* FAQ */
+    .faq{padding:36px 0}
+    .accordion{max-width:900px;margin:0 auto}
+    .q{background:var(--card);border:1px solid var(--border);padding:12px;border-radius:10px;margin-bottom:10px;cursor:pointer}
+    .q .a{display:none;padding-top:8px;color:var(--muted)}
+    .q.open .a{display:block}
+
+    /* DOWNLOAD */
+    .download{background:#0A0A0A;padding:48px 0;border-top:1px solid #111}
+    .download .box{max-width:900px;margin:0 auto;text-align:center}
+    .small{font-size:13px;color:var(--muted)}
+
+    footer{background:#0A0A0A;border-top:1px solid #1A1A1A;padding:20px 0;margin-top:20px}
+    .footer-inner{display:flex;justify-content:space-between;align-items:center}
+
+    /* Responsive */
+    @media(max-width:900px){
+      .hero-grid{grid-template-columns:1fr;padding-bottom:40px}
+      .grid{grid-template-columns:repeat(2,1fr)}
+      .stats-grid{flex-direction:column;gap:12px}
+      .step-row{flex-direction:column}
+      .connector{width:4px;height:60px}
+    }
+    @media(max-width:600px){
+      h1{font-size:34px}
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand"><div class="logo">D</div><div>DYBALA OPTIMIZER</div></div>
+      <nav>
+        <ul>
+          <li><a href="#features">Funcionalidades</a></li>
+          <li><a href="#pricing">Preços</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </nav>
+      <div class="nav-right"><a class="btn btn-primary" href="#download">Download</a></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <div class="hero-grid">
+        <div>
+          <span class="badge">✦ Feito para FiveM &amp; Gaming Competitivo</span>
+          <h1>O Optimizer que o teu PC precisava</h1>
+          <p class="lead">Reduz input lag, melhora o strafe e otimiza o Windows com 1 clique. Licença vitalícia por apenas 15€.</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="#download">⬇ Download Agora</a>
+            <a class="btn btn-secondary" href="https://discord.gg/GeEESpQVJc" target="_blank" rel="noopener">💬 Discord</a>
+          </div>
+        </div>
+        <div>
+          <div class="mockup">
+            <svg width="260" height="160" viewBox="0 0 260 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="border-radius:12px;overflow:hidden">
+              <rect width="260" height="160" fill="#0B0B0B"/>
+              <rect x="12" y="12" width="236" height="136" rx="8" fill="#111"/>
+              <g fill="#222">
+                <rect x="24" y="28" width="180" height="12" rx="6"/>
+                <rect x="24" y="52" width="120" height="10" rx="5"/>
+                <rect x="24" y="76" width="200" height="10" rx="5"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="container stats-grid">
+        <div class="stat"><b>0.5ms</b><small>Timer Resolution</small></div>
+        <div class="stat"><b>1 Clique</b><small>Perfis por Jogo</small></div>
+        <div class="stat"><b>15+</b><small>Otimizações</small></div>
+        <div class="stat"><b>100%</b><small>Reversível</small></div>
+      </div>
+    </section>
+
+    <section id="features" class="features container">
+      <h2>Tudo o que precisas para dominar</h2>
+      <div class="grid">
+        <div class="card"><div class="icon icon--purple">⚡</div><div><h3>Timer Resolution 0.5ms</h3><p>Reduz o timer do Windows para máxima responsividade de input e strafe consistente.</p></div></div>
+        <div class="card"><div class="icon icon--green">🧹</div><div><h3>Limpeza Automática de RAM</h3><p>Limpa a standby list automaticamente em background enquanto jogas.</p></div></div>
+        <div class="card"><div class="icon icon--orange">🔥</div><div><h3>Game Mode</h3><p>Ativa plano Ultimate Performance, desativa aceleração do rato e dá boost ao FiveM de uma vez.</p></div></div>
+        <div class="card"><div class="icon icon--purple">🔧</div><div><h3>Tweaks Avançados</h3><p>15+ otimizações de registo do Windows, todas reversíveis com 1 clique.</p></div></div>
+        <div class="card"><div class="icon icon--blue">🎮</div><div><h3>Perfis por Jogo</h3><p>Perfis para FiveM, CS2 e mais — aplica tudo com 1 clique.</p></div></div>
+        <div class="card"><div class="icon icon--yellow">↩</div><div><h3>Rollback Completo</h3><p>Guarda o estado do teu PC antes de otimizar. Restaura tudo se precisares.</p></div></div>
+        <div class="card"><div class="icon icon--green">🤖</div><div><h3>Auto Optimizer</h3><p>Monitorização em background — limpa RAM e mantém FiveM otimizado automaticamente.</p></div></div>
+        <div class="card"><div class="icon icon--red">🔑</div><div><h3>Licença HWID</h3><p>Licença associada ao teu hardware. Segura e intransferível.</p></div></div>
+        <div class="card"><div class="icon icon--purple">📊</div><div><h3>Dashboard em Tempo Real</h3><p>Monitoriza RAM, CPU e Standby List em tempo real.</p></div></div>
+      </div>
+    </section>
+
+    <section class="steps container">
+      <h2 style="text-align:center">Simples como 1, 2, 3</h2>
+      <div class="step-row" style="margin-top:18px">
+        <div class="step"><div class="circle">1</div><strong>Download</strong><div class="small">Descarrega o .exe e executa como Administrador.</div></div>
+        <div class="connector"></div>
+        <div class="step"><div class="circle">2</div><strong>Ativa a Licença</strong><div class="small">Introduz a tua key e ativa numa segunda.</div></div>
+        <div class="connector"></div>
+        <div class="step"><div class="circle">3</div><strong>Otimiza</strong><div class="small">Aplica o perfil FiveM e sente a diferença.</div></div>
+      </div>
+    </section>
+
+    <section id="pricing" class="pricing">
+      <div class="price-card highlight">
+        <div class="price-badge">VITALÍCIO</div>
+        <div style="text-align:center">
+          <h3>Um preço. Para sempre.</h3>
+          <div class="price">15€</div>
+          <div class="small">Pagamento único. Sem subscrições.</div>
+          <ul class="features-list">
+            <li>✓ Todas as funcionalidades incluídas</li>
+            <li>✓ Atualizações futuras gratuitas</li>
+            <li>✓ Suporte no Discord</li>
+            <li>✓ Licença vitalícia HWID</li>
+            <li>✓ Rollback completo</li>
+          </ul>
+          <a class="btn btn-primary" href="https://discord.gg/GeEESpQVJc" target="_blank">Comprar Agora — 15€</a>
+          <div class="small" style="margin-top:10px">Pagamento via MB Way ou PayPal. Chave enviada em minutos.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="faq container">
+      <h2>Perguntas Frequentes</h2>
+      <div class="accordion" style="margin-top:12px">
+        <div class="q"><div class="q-title">Aumenta os meus FPS?</div><div class="a">Não diretamente. O Dybala Optimizer reduz input lag, melhora a consistência do frametime e torna o strafe mais responsivo. Os FPS dependem do hardware.</div></div>
+        <div class="q"><div class="q-title">É seguro para o meu PC?</div><div class="a">Sim. Todas as alterações são feitas no registo do Windows e são 100% reversíveis com o botão Restaurar.</div></div>
+        <div class="q"><div class="q-title">Funciona com anti-cheat (FiveM, VAC, Vanguard)?</div><div class="a">Sim. O optimizer não injeta em processos de jogos, não automatiza input e não viola os termos de serviço de qualquer jogo.</div></div>
+        <div class="q"><div class="q-title">E se formatar o PC?</div><div class="a">Contacta-nos no Discord e fazemos o reset do HWID gratuitamente.</div></div>
+        <div class="q"><div class="q-title">Funciona em Windows 10 e 11?</div><div class="a">Sim, compatível com Windows 10 e Windows 11 de 64 bits.</div></div>
+        <div class="q"><div class="q-title">Como recebo a licença?</div><div class="a">Após o pagamento, envia o comprovativo no Discord. A key é enviada em minutos.</div></div>
+      </div>
+    </section>
+
+    <section id="download" class="download">
+      <div class="box container">
+        <h2>Pronto para otimizar?</h2>
+        <p class="small">Descarrega agora e sente a diferença.</p>
+        <div style="margin:18px 0"><a class="btn btn-primary" href="#">⬇ Download Gratuito</a></div>
+        <div class="small">Requer Windows 10/11 64-bit • Executar como Administrador</div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div style="display:flex;gap:12px;align-items:center"><div class="logo">D</div><div>DYBALA OPTIMIZER<br><span style="color:var(--muted);font-size:13px">© 2025 Dybala Optimizer</span></div></div>
+      <div><a class="btn btn-secondary" href="https://discord.gg/GeEESpQVJc" target="_blank">💬 Discord</a></div>
+    </div>
+  </footer>
+
+  <script>
+    // Accordion
+    document.querySelectorAll('.accordion .q').forEach(q => {
+      q.addEventListener('click', () => q.classList.toggle('open'))
+    })
+  </script>
+</body>
+</html><!doctype html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dybala Optimizer</title>
+  <style>
+    :root{
+      --bg:#0F0F0F;
+      --card:#161616;
+      --borders:#222222;
+      --accent:#6C63FF;
+      --accent-2:#4CAF50;
+      --text:#FFFFFF;
+      --muted:#555555;
+      --btn-sec-bg:#1A1A1A;
+      --btn-sec-text:#888888;
+      --btn-sec-border:#333333;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;line-height:1.4;margin:0}
+    a{color:inherit;text-decoration:none}
+
+    /* NAVBAR */
+    .nav{position:fixed;top:0;left:0;right:0;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:rgba(10,10,10,0.6);backdrop-filter:blur(6px);border-bottom:1px solid rgba(34,34,34,0.8);z-index:50}
+    .nav .left{display:flex;align-items:center;gap:12px}
+    .logo{display:flex;align-items:center;gap:10px}
+    .logo .mark{width:36px;height:36px;border-radius:8px;background:linear-gradient(180deg,var(--accent),#5a50e6);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff}
+    .nav .center{display:flex;gap:20px}
+    .nav .center a{color:var(--muted)}
+    .nav .right button{cursor:pointer}
+
+    /* HERO */
+    .hero{min-height:100vh;display:flex;align-items:center;gap:40px;padding:100px 24px 60px 24px}
+    .container{max-width:1200px;margin:0 auto;width:100%}
+    .hero-left{flex:1}
+    .badge{display:inline-block;padding:6px 10px;border-radius:999px;background:#1A1A2E;color:var(--accent);font-weight:600;margin-bottom:18px;border:1px solid rgba(108,99,255,0.08)}
+    h1{font-size:48px;margin:0 0 12px}
+    p.lead{color:var(--muted);margin:0 0 20px}
+    .hero-cta{display:flex;gap:12px;margin-top:18px}
+    .btn{padding:12px 18px;border-radius:8px;border:0;cursor:pointer;font-weight:600}
+    .btn-primary{background:var(--accent);color:#fff}
+    .btn-secondary{background:var(--btn-sec-bg);color:var(--btn-sec-text);border:1px solid var(--btn-sec-border)}
+
+    .mockup{flex:1;min-height:360px;border-radius:14px;background:linear-gradient(180deg,#0b0b0b,#121212);border:1px solid var(--borders);display:flex;align-items:center;justify-content:center;color:var(--muted)}
+
+    /* STATS */
+    .stats{background:var(--card);border-top:1px solid var(--borders);border-bottom:1px solid var(--borders);padding:18px 24px;margin-top:20px}
+    .stats-grid{display:flex;gap:12px;max-width:1000px;margin:0 auto;justify-content:space-between}
+    .stat{flex:1;text-align:center}
+    .stat .num{font-size:20px;font-weight:700}
+    .stat .label{color:var(--muted)}
+
+    /* FEATURES */
+    .section{padding:48px 24px}
+    .section h2{font-size:28px;margin:0 0 18px}
+    .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1100px;margin:0 auto}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:18px;border-radius:12px;border:1px solid var(--borders);display:flex;gap:12px;align-items:flex-start}
+    .card .icon{font-size:22px;width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+    .card h3{margin:0;font-size:16px}
+    .card p{margin:6px 0 0;color:var(--muted);font-size:14px}
+
+    /* HOW IT WORKS */
+    .steps{display:flex;gap:18px;align-items:center;max-width:900px;margin:0 auto}
+    .step{background:var(--card);padding:20px;border-radius:12px;border:1px solid var(--borders);flex:1;text-align:center}
+    .step .circle{width:48px;height:48px;border-radius:50%;background:var(--accent);display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:#fff;margin-bottom:12px}
+    .connector{height:2px;background:linear-gradient(90deg,var(--accent) 0%,transparent 100%);flex:0 0 40px}
+
+    /* PRICING */
+    .pricing-card{max-width:720px;margin:0 auto;background:linear-gradient(180deg,rgba(108,99,255,0.06),transparent);padding:28px;border-radius:14px;border:1px solid var(--accent);text-align:center}
+    .badge-top{display:inline-block;padding:6px 10px;border-radius:999px;background:var(--accent);color:#fff;font-weight:700;margin-bottom:16px}
+    .price{font-size:44px;font-weight:800;margin:0}
+    .price-sub{color:var(--muted);margin-bottom:14px}
+    .features-list{list-style:none;padding:0;margin:18px 0;text-align:left}
+    .features-list li{margin:8px 0;color:var(--muted)}
+
+    /* FAQ */
+    .faq{max-width:900px;margin:0 auto}
+    .faq-item{background:var(--card);border:1px solid var(--borders);border-radius:10px;margin-bottom:10px}
+    .faq-item button{width:100%;text-align:left;padding:14px;border:0;background:transparent;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+    .faq-item .answer{padding:0 14px 14px 14px;color:var(--muted);display:none}
+    .faq-item.open .answer{display:block}
+
+    /* DOWNLOAD */
+    .download-section{background:#0A0A0A;padding:40px 24px;border-top:1px solid #111}
+    .download-inner{max-width:900px;margin:0 auto;text-align:center}
+
+    /* FOOTER */
+    footer{background:#0A0A0A;border-top:1px solid #1A1A1A;padding:18px 24px;margin-top:30px}
+    footer .inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+
+    /* Responsive */
+    @media(max-width:900px){
+      .features-grid{grid-template-columns:repeat(2,1fr)}
+      .hero{flex-direction:column;padding-top:120px}
+      h1{font-size:36px}
+    }
+    @media(max-width:600px){
+      .features-grid{grid-template-columns:1fr}
+      .nav .center{display:none}
+      .stats-grid{flex-direction:column;gap:10px}
+      .steps{flex-direction:column}
+      .hero{padding:120px 16px}
+    }
+
+    /* fade in */
+    .fade{opacity:0;transform:translateY(16px);transition:all 600ms cubic-bezier(.2,.8,.2,1)}
+    .fade.visible{opacity:1;transform:none}
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="left">
+      <div class="logo"><div class="mark">D</div><div style="font-weight:700">DYBALA OPTIMIZER</div></div>
+    </div>
+    <div class="center">
+      <a href="#features">Funcionalidades</a>
+      <a href="#prices">Preços</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="right">
+      <a href="#download"><button class="btn btn-primary">Download</button></a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-left">
+        <span class="badge">✦ Feito para FiveM &amp; Gaming Competitivo</span>
+        <h1>O Optimizer que o teu PC precisava</h1>
+        <p class="lead">Reduz input lag, melhora o strafe e otimiza o Windows com 1 clique. Licença vitalícia por apenas 15€.</p>
+        <div class="hero-cta">
+          <a href="#download"><button class="btn btn-primary">⬇ Download Agora</button></a>
+          <a href="https://discord.gg/GeEESpQVJc" target="_blank" rel="noopener noreferrer"><button class="btn btn-secondary">💬 Discord</button></a>
+        </div>
+      </div>
+      <div class="mockup fade" style="min-width:300px">Mockup da App<br><small style="color:var(--muted)">Screenshot placeholder</small></div>
+    </section>
+
+    <section class="stats fade">
+      <div class="stats-grid">
+        <div class="stat"><div class="num">0.5ms</div><div class="label">Timer Resolution</div></div>
+        <div class="stat"><div class="num">1 Clique</div><div class="label">Perfis por Jogo</div></div>
+        <div class="stat"><div class="num">15+</div><div class="label">Otimizações</div></div>
+        <div class="stat"><div class="num">100%</div><div class="label">Reversível</div></div>
+      </div>
+    </section>
+
+    <section id="features" class="section">
+      <h2>Tudo o que precisas para dominar</h2>
+      <div class="features-grid">
+        <article class="card fade">
+          <div class="icon" style="background:linear-gradient(180deg,#6C63FF,#5748D9)">⚡</div>
+          <div>
+            <h3>Timer Resolution 0.5ms</h3>
+            <p>Reduz o timer do Windows para máxima responsividade de input e strafe consistente.</p>
+          </div>
+        </article>
+        <article class="card fade">
+          <div class="icon" style="background:linear-gradient(180deg,#4CAF50,#3b9b42)">🧹</div>
+          <div>
+            <h3>Limpeza Automática de RAM</h3>
+            <p>Limpa a standby list automaticamente em background enquanto jogas.</p>
+          </div>
+        </article>
+        <article class="card fade">
+          <div class="icon" style="background:linear-gradient(180deg,#FF8A3D,#ff6e1a)">🔥</div>
+          <div>
+            <h3>Game Mode</h3>
+            <p>Ativa plano Ultimate Performance, desativa aceleração do rato e dá boost ao FiveM de uma vez.</p>
+          </div>
+        </article>
+
+        <article class="card fade">
+          <div class="icon" style="background:linear-gradient(180deg,#6C63FF,#5748D9)">🔧</div>
+          <div>
+            <h3>Tweaks Avançados</h3>
+            <p>15+ otimizações de registo do Windows, todas reversíveis com 1 clique.</p>
+          </div>
+        </article>
+        <article class="card fade">
+          <div class="icon" style="background:linear-gradient(180deg,#3CA0FF,#2b85e6)">🎮</div>
+          <div>
+            <h3>Perfis por Jogo</h3>
+            <p>Perfis para FiveM, CS2 e mais — aplica tudo com 1 clique.</p>
+          </div>
+        </article>
+        <article class="card fade">
+          <div class="icon" style="background:linear-gradient(180deg,#FFD24A,#ffcc33)">↩</div>
+          <div>
+            <h3>Rollback Completo</h3>
+            <p>Guarda o estado do teu PC antes de otimizar. Restaura tudo se precisares.</p>
+          </div>
+        </article>
+
+        <article class="card fade">
+          <div class="icon" style="background:linear-gradient(180deg,#4CAF50,#3b9b42)">🤖</div>
+          <div>
+            <h3>Auto Optimizer</h3>
+            <p>Monitorização em background — limpa RAM e mantém FiveM otimizado automaticamente.</p>
+          </div>
+        </article>
+        <article class="card fade">
+          <div class="icon" style="background:linear-gradient(180deg,#FF5C5C,#e04343)">🔑</div>
+          <div>
+            <h3>Licença HWID</h3>
+            <p>Licença associada ao teu hardware. Segura e intransferível.</p>
+          </div>
+        </article>
+        <article class="card fade">
+          <div class="icon" style="background:linear-gradient(180deg,#6C63FF,#5748D9)">📊</div>
+          <div>
+            <h3>Dashboard em Tempo Real</h3>
+            <p>Monitoriza RAM, CPU e Standby List em tempo real.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Simples como 1, 2, 3</h2>
+      <div class="steps">
+        <div class="step fade"><div class="circle">1</div><h4>Download</h4><p style="color:var(--muted)">Descarrega o .exe e executa como Administrador.</p></div>
+        <div class="connector" aria-hidden></div>
+        <div class="step fade"><div class="circle">2</div><h4>Ativa a Licença</h4><p style="color:var(--muted)">Introduz a tua key e ativa numa segunda.</p></div>
+        <div class="connector" aria-hidden></div>
+        <div class="step fade"><div class="circle">3</div><h4>Otimiza</h4><p style="color:var(--muted)">Aplica o perfil FiveM e sente a diferença.</p></div>
+      </div>
+    </section>
+
+    <section id="prices" class="section">
+      <h2>Um preço. Para sempre.</h2>
+      <div class="pricing-card fade">
+        <div class="badge-top">VITALÍCIO</div>
+        <p class="price">15€</p>
+        <p class="price-sub">Pagamento único. Sem subscrições.</p>
+        <ul class="features-list">
+          <li>✓ Todas as funcionalidades incluídas</li>
+          <li>✓ Atualizações futuras gratuitas</li>
+          <li>✓ Suporte no Discord</li>
+          <li>✓ Licença vitalícia HWID</li>
+          <li>✓ Rollback completo</li>
+        </ul>
+        <a href="https://discord.gg/GeEESpQVJc" target="_blank" rel="noopener noreferrer"><button class="btn btn-primary" style="font-size:18px;padding:14px 20px">Comprar Agora — 15€</button></a>
+        <p style="color:var(--muted);margin-top:10px">Pagamento via MB Way ou PayPal. Chave enviada em minutos.</p>
+      </div>
+    </section>
+
+    <section id="faq" class="section">
+      <h2>Perguntas Frequentes</h2>
+      <div class="faq">
+        <div class="faq-item">
+          <button aria-expanded="false">Aumenta os meus FPS?<span>▾</span></button>
+          <div class="answer">Não diretamente. O Dybala Optimizer reduz input lag, melhora a consistência do frametime e torna o strafe mais responsivo. Os FPS dependem do hardware.</div>
+        </div>
+        <div class="faq-item">
+          <button aria-expanded="false">É seguro para o meu PC?<span>▾</span></button>
+          <div class="answer">Sim. Todas as alterações são feitas no registo do Windows e são 100% reversíveis com o botão Restaurar.</div>
+        </div>
+        <div class="faq-item">
+          <button aria-expanded="false">Funciona com anti-cheat (FiveM, VAC, Vanguard)?<span>▾</span></button>
+          <div class="answer">Sim. O optimizer não injeta em processos de jogos, não automatiza input e não viola os termos de serviço de qualquer jogo.</div>
+        </div>
+        <div class="faq-item">
+          <button aria-expanded="false">E se formatar o PC?<span>▾</span></button>
+          <div class="answer">Contacta-nos no Discord e fazemos o reset do HWID gratuitamente.</div>
+        </div>
+        <div class="faq-item">
+          <button aria-expanded="false">Funciona em Windows 10 e 11?<span>▾</span></button>
+          <div class="answer">Sim, compatível com Windows 10 e Windows 11 de 64 bits.</div>
+        </div>
+        <div class="faq-item">
+          <button aria-expanded="false">Como recebo a licença?<span>▾</span></button>
+          <div class="answer">Após o pagamento, envia o comprovativo no Discord. A key é enviada em minutos.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="download" class="download-section">
+      <div class="download-inner fade">
+        <h2>Pronto para otimizar?</h2>
+        <p style="color:var(--muted)">Descarrega agora e sente a diferença.</p>
+        <a href="#" download><button class="btn btn-primary" style="font-size:18px;padding:14px 22px">⬇ Download Gratuito</button></a>
+        <p style="color:var(--muted);margin-top:10px">Requer Windows 10/11 64-bit • Executar como Administrador</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="inner">
+      <div style="display:flex;align-items:center;gap:12px"><div class="mark">D</div><div>DYBALA OPTIMIZER • © 2025 Dybala Optimizer</div></div>
+      <div><a href="https://discord.gg/GeEESpQVJc" target="_blank" rel="noopener noreferrer"><button class="btn btn-secondary">💬 Discord</button></a></div>
+    </div>
+  </footer>
+
+  <script>
+    // Fade-in on scroll
+    const obs = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible') })
+    },{threshold:0.12})
+    document.querySelectorAll('.fade').forEach(el=>obs.observe(el))
+
+    // Accordion
+    document.querySelectorAll('.faq-item button').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const item = btn.parentElement
+        const open = item.classList.toggle('open')
+        btn.setAttribute('aria-expanded', open)
+      })
+    })
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{
+        const href = a.getAttribute('href')
+        if(href.length>1){
+          e.preventDefault()
+          document.querySelector(href).scrollIntoView({behavior:'smooth',block:'start'})
+        }
+      })
+    })
+  </script>
+</body>
+</html>
